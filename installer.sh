@@ -7,7 +7,7 @@ echo "Clearing screen before we start..."
 sleep 4 && clear
 
 # Declare variables
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Create function for time stamp
 get_timestamp() {
   # display date time as "01Jun2024_01:30:00-PM"
@@ -67,7 +67,7 @@ fi
 
 cd $git_folder && "echo cd $git_folder - $(get_timestamp)" >> $logg && echo "pwd: $PWD - $(get_timestamp)" >> $logg
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Download the following gitlab repos:
 repo_urls=(
 # List of GitLab reps urls:
@@ -115,22 +115,18 @@ repo_urls=(
 )
 
 # Directory of where repos will be cloned:
-clone_dir="$git_folder"
-
 for repo_url in "${repo_urls[@]}"; do
   repo_name=$(basename "repo_url" .git) # Extract repo name from url
-  echo "Cloning $repo_name from $repo_url..."
-  echo "Cloned $repo_name from $repo_url into $clone_dir - $(get_timestamp)" >> $logg
-  git clone "repo_url" "$clone_dir/$repo_name"
+  echo "Cloning $repo_name from $repo_url..." && echo "Cloned $repo_name from $repo_url into $git_folder - $(get_timestamp)" >> $logg
+  sudo git clone "repo_url" "$git_folder/$repo_name"
 done
 
-
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Special instructions for gits:
 
 # Special install for cheat:
-cd $HOME && echo "cd home - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-echo "Clone & install cheat - $(get_timestamp)" >> $logg
+cd $HOME && echo "cd home - $(get_timestamp)" >> $logg && echo "pwd: $PWD - $(get_timestamp)" >> $logg
+echo "Start cheat install - $(get_timestamp)" >> $logg
 cd /tmp \
   && wget https://github.com/cheat/cheat/releases/download/4.4.2/cheat-linux-amd64.gz \
   && gunzip cheat-linux-amd64.gz \
@@ -140,25 +136,21 @@ echo "Clone & install cheat complete - $(get_timestamp)" >> $logg
 echo "Setting up cheat for the first time, standby..." && echo "Setting up cheat - $(get_timestamp)" >> $logg
 yes | cheat scp
 echo "cheat set up cheat complete." && echo "cheat set up cheat complete - $(get_timestamp)" >> $logg
-cd $HOME && echo "cd home - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd $HOME && echo "cd home - $(get_timestamp)" >> $logg && echo "pwd: $PWD - $(get_timestamp)" >> $logg
 
 # Special install for CyberChef:
 echo "Start CyberChef install" && echo "Start CyberChef install - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-cd CyberChef && echo "cd CyberChef - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $PWD - $(get_timestamp)" >> $logg
+cd CyberChef && echo "cd $PWD - $(get_timestamp)" >> $logg
 sudo npm install
 echo "export NODE_OPTIONS=--max_old_space_size=2048" >> ~/.bashrc
 echo "Finish CyberChef install - $(get_timestamp)" >> $logg
 
+#left off here
 # Special install for ScareCrow:
 echo "Start ScareCrow install" && echo "Start ScareCrow install - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-cd ScareCrow && echo "cd ScareCrow - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $PWD - $(get_timestamp)" >> $logg
+cd ScareCrow && echo "cd $PWD - $(get_timestamp)" >> $logg
 
 # First ensure Golang is installed (ScareCrow cont.)
 sudo apt install -y golang  && echo "sudo apt install -y golang - $(get_timestamp)" >> $logg
@@ -194,7 +186,7 @@ echo "Finish ScareCrow install" && echo "Finish ScareCrow install - $(get_timest
 
 # Special install for garble:
 echo "Start garble install" && echo "Start garble install - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd garble && echo "cd garble - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
@@ -203,7 +195,7 @@ echo "Finish garble install" && echo "Finish garble install - $(get_timestamp)" 
 
 # Special install for garble:
 echo "Start markdown_live_preview install" && echo "Start garble install - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd markdown-live-preview && echo "cd markdown-live-preview - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
@@ -212,7 +204,7 @@ echo "Finish markdown_live_preview install" && echo "Finish markdown_live_previe
 
 # Special install for pe-bear:
 echo "Start pe-bear install" && echo "Start garble install - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 sudo git clone --recursive https://github.com/hasherezade/pe-bear.git && echo "sudo git clone --recursive https://github.com/hasherezade/pe-bear.git - $(get_timestamp)" >> $logg
 cd pe-bear && echo "cd pe-bear - $(get_timestamp)" >> $logg
@@ -222,7 +214,7 @@ echo "Finish pe-bear install" && echo "Finish pe-bear install - $(get_timestamp)
 
 # Special install for Chepy:
 echo "Start Chepy install" && echo "Start Chepy install - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd chepy && echo "cd chepy - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
@@ -234,7 +226,7 @@ echo "Finish Chepy install" && echo "Finish Chepy install - $(get_timestamp)" >>
 
 # Special install for Flamingo:
 echo "Start Flamingo install" && echo "Start Flamingo install - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd flamingo && echo "cd flamingo - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
@@ -248,7 +240,7 @@ echo "Finish Flamingo install" && echo "Finish Flamingo install - $(get_timestam
 
 
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Python installs
 
 # Start install of Ciphey
@@ -262,7 +254,7 @@ pip3 install updog
 echo "Finish python install of updog..." && echo "Fininsh python install of updog - $(get_timestamp)" >> $logg
 
 echo "Start python install of PXEThief..." && echo "Start python install of PXEThief - $(get_timestamp)" >> $logg
-cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd flamingo && echo "cd PXEThief - $(get_timestamp)" >> $logg
 pip install -r requirements.txt
@@ -271,7 +263,7 @@ echo "Finish python install of PXEThief..." && echo "Fininsh python install of P
 
 
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # apt install section
 cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
