@@ -101,8 +101,9 @@ repo_urls=(
 "https://github.com/cheat/cheat.git"
 "https://github.com/gchq/CyberChef.git"
 "https://github.com/Tylous/ScareCrow.git"
-
-
+"https://github.com/burrowers/garble.git"
+"https://github.com/tanabe/markdown-live-preview.git"
+"https://github.com/securisec/chepy.git"
 )
 
 # Directory of where repos will be cloned:
@@ -135,7 +136,7 @@ cd $HOME && echo "cd home - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 
 # Special install for CyberChef:
-echo "Start CyberChef install - $(get_timestamp)" >> $logg
+echo "Start CyberChef install" && echo "Start CyberChef install - $(get_timestamp)" >> $logg
 cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd CyberChef && echo "cd CyberChef - $(get_timestamp)" >> $logg
@@ -145,7 +146,7 @@ echo "export NODE_OPTIONS=--max_old_space_size=2048" >> ~/.bashrc
 echo "Finish CyberChef install - $(get_timestamp)" >> $logg
 
 # Special install for ScareCrow:
-echo "Start ScareCrow install - $(get_timestamp)" >> $logg
+echo "Start ScareCrow install" && echo "Start ScareCrow install - $(get_timestamp)" >> $logg
 cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd ScareCrow && echo "cd ScareCrow - $(get_timestamp)" >> $logg
@@ -180,12 +181,36 @@ sudo apt install -y mingw-w64 && echo "sudo apt install -y mingw-w64  - $(get_ti
 
 # Built it
 go build ScareCrow.go
-echo "Finish ScareCrow install"
-echo "Finish ScareCrow install - $(get_timestamp)" >> $logg
+echo "Finish ScareCrow install" && echo "Finish ScareCrow install - $(get_timestamp)" >> $logg
 
 
+# Special install for garble:
+echo "Start garble install" && echo "Start garble install - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd garble && echo "cd garble - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+go install mvdan.cc/garble@latest
+echo "Finish garble install" && echo "Finish garble install - $(get_timestamp)" >> $logg
 
+# Special install for garble:
+echo "Start markdown_live_preview install" && echo "Start garble install - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd markdown-live-preview && echo "cd markdown-live-preview - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+make setup && make build
+echo "Finish markdown_live_preview install" && echo "Finish markdown_live_preview install - $(get_timestamp)" >> $logg
 
+# Special install for pe-bear:
+echo "Start pe-bear install" && echo "Start garble install - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+sudo git clone --recursive https://github.com/hasherezade/pe-bear.git && echo "sudo git clone --recursive https://github.com/hasherezade/pe-bear.git - $(get_timestamp)" >> $logg
+cd pe-bear && echo "cd pe-bear - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+./build_qt6.sh
+echo "Finish pe-bear install" && echo "Finish pe-bear install - $(get_timestamp)" >> $logg
 
 
 
@@ -202,11 +227,16 @@ echo "Start python install of updog..." && echo "Start python install of updog -
 pip3 install updog
 echo "Finish python install of updog..." && echo "Fininsh python install of updog - $(get_timestamp)" >> $logg
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # apt install section
 cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 sudo apt install -y flameshot && echo "sudo apt install -y flameshot - $(get_timestamp)" >> $logg
+
+cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+sudo apt install -y talk talkd && echo "sudo apt install -y talk talkd - $(get_timestamp)" >> $logg
 
 
 
