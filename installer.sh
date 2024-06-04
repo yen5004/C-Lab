@@ -54,9 +54,12 @@ gnome-terminal --command="watch -n 2 cat $logg"
 echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
 
 # Update and upgrade machine
-echo "Start machine update & upgrade - $(get_timestamp)" >> $logg
-sudo apt update -y && sudo apt upgrade -y
-echo "Finish machine update & upgrade - $(get_timestamp)" >> $logg
+echo "Start machine update & full upgrade - $(get_timestamp)" >> $logg
+#sudo apt update -y && sudo apt upgrade -y
+sudo apt update -y && sudo apt full-upgrade -y
+echo "Finish machine update & full upgrade - $(get_timestamp)" >> $logg
+
+
 
 #create gitlab folder for downloads:
 cd $folder
@@ -104,6 +107,12 @@ repo_urls=(
 "https://github.com/burrowers/garble.git"
 "https://github.com/tanabe/markdown-live-preview.git"
 "https://github.com/securisec/chepy.git"
+"https://github.com/itm4n/PrivescCheck.git"
+#"https://github.com/topotam/PetitPotam.git"
+#"https://github.com/peass-ng/PEASS-ng.git"
+#""
+#""
+#""
 )
 
 # Directory of where repos will be cloned:
@@ -239,6 +248,7 @@ echo "Finish Flamingo install" && echo "Finish Flamingo install - $(get_timestam
 
 
 
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Python installs
 
@@ -262,6 +272,10 @@ sudo apt install -y flameshot && echo "sudo apt install -y flameshot - $(get_tim
 cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 sudo apt install -y talk talkd && echo "sudo apt install -y talk talkd - $(get_timestamp)" >> $logg
+
+cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+sudo apt install -y clamav && echo "sudo apt install -y clamav - $(get_timestamp)" >> $logg
 
 
 
