@@ -42,14 +42,24 @@ get_timestamp() {
 }
 
 logg="$HOME/C_lab/install_log"
+# Open new terminal to monitor install_log
+echo "Opening new terminal for monitoring of intall_log..."
+sleep 4
+gnome-terminal --command="watch -n 2 cat $logg"
 echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
 
 #create gitlab folder for downloads:
+cd $folder
 mkdir gitlabs && echo "Created 'gitlabs' folder - $(get_timestamp)" >> $logg
 cd gitlabs
+echo "cd gitlabs - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+
 
 # Download the following gitlab repos:
 
+
+repo_urls=(
 # List of GitLab reps urls:
 "https://github.com/yen5004/1-liner-ls--la-.git"
 "https://github.com/yen5004/ZIP_TAR.git"
@@ -78,20 +88,41 @@ cd gitlabs
 "https://github.com/yen5004/DevMal_U.git"
 "https://github.com/yen5004/1-liner-keep-alive.git"
 "https://github.com/0x09AL/RdpThief.git"
+"https://github.com/yen5004/updog.git"
+"https://github.com/Ciphey/Ciphey.git"
+"https://github.com/cheat/cheat.git"
 
 
 
-https://github.com/yen5004/updog.git
+
+)
+
+# Directory of where repos will be cloned:
+clone_dir="$folder/gitlabs"
+
+for repo_url in "$${}repo_urls[@]}"; do
+  repo_name=$(basename "repo_url" .git) # Extract repo name from url
+  echo "Cloning $repo_name from $repo_url..."
+  echo "Cloned $repo_name from $repo_url into $clone_dir - $(get_timestamp)" >> $logg
+  git clone "repo_url" "$clone_dir/$repo_name"
+done
+
+
+
+
+
+
+#https://github.com/yen5004/updog.git
 pip3 install updog
 
-https://github.com/Ciphey/Ciphey.git
+#https://github.com/Ciphey/Ciphey.git
 python3 -m pip install ciphey --upgrade
 
 
 https://github.com/cheat/cheat.git
 
 
-
+apt install flameshot
 
 
 
