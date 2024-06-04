@@ -9,8 +9,15 @@ sudo ls
 clear
 
 #variables
-#date timestamp
-ts=$(date +"%d%b%Y_%H:%M:%S%p")
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Create function for time stamp
+get_timestamp() {
+  # display date time as "01Jun2024_01:30:00-PM"
+  date +"%d%b%Y_%H:%M:%S-%p"
+}
+
+#create variable for default folder
+folder="$HOME/C_lab"
 
 
 if [ ! -d "$HOME/C_lab" }; then
@@ -21,8 +28,7 @@ else
   echo "C_lab folder already exists"
 fi
 
-#create variable for default folder
-folder="$HOME/C_lab"
+
 
 #change to default folder
 cd $folder
@@ -36,13 +42,9 @@ else
     echo "install_log folder already exists."
 fi
 
-# Create function for time stamp
-get_timestamp() {
-  # display date time as "01Jun2024_01:30:00-PM"
-  date +"%d%b%Y_%H:%M:%S-%p"
-}
 
-echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
+
+echo -e "Install log created, begin tracking - $(get_timestamp)" >> $logg
 
 logg="$HOME/C_lab/install_log"
 # Open new terminal to monitor install_log
@@ -97,7 +99,7 @@ repo_urls=(
 "https://github.com/yen5004/updog.git"
 "https://github.com/Ciphey/Ciphey.git"
 "https://github.com/cheat/cheat.git"
-
+"https://github.com/gchq/CyberChef.git"
 
 
 
@@ -128,6 +130,13 @@ echo "Setting up cheat for the first time, standby..." && echo "Setting up cheat
 yes | cheat scp
 echo "cheat set up cheat complete." && echo "cheat set up cheat complete - $(get_timestamp)" >> $logg
 
+# Special install for CyberChef:
+cd gitlabs && echo "cd gitlabs - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd CyberChef && echo "cd CyberChef - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Python installs
@@ -141,12 +150,6 @@ echo "Finish python install of Ciphey..." && echo "Fininsh python install of Cip
 echo "Start python install of updog..." && echo "Start python install of updog - $(get_timestamp)" >> $logg
 pip3 install updog
 echo "Finish python install of updog..." && echo "Fininsh python install of updog - $(get_timestamp)" >> $logg
-
-
-
-
-
-
 
 
 # apt install section
