@@ -212,6 +212,31 @@ echo "pwd: $PWD - $(get_timestamp)" >> $logg
 ./build_qt6.sh
 echo "Finish pe-bear install" && echo "Finish pe-bear install - $(get_timestamp)" >> $logg
 
+# Special install for Chepy:
+echo "Start Chepy install" && echo "Start Chepy install - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd chepy && echo "cd chepy - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+pip3 install -e
+pip install .
+pip install pyinstaller
+pyinstaller cli.py --name chepy --onefile
+echo "Finish Chepy install" && echo "Finish Chepy install - $(get_timestamp)" >> $logg
+
+# Special install for Flamingo:
+echo "Start Flamingo install" && echo "Start Flamingo install - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd flamingo && echo "cd flamingo - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+go get -u -v github.com/atredispartners/flamingo
+go install -v github.com/atredispartners/flamingo
+echo "Finish Flamingo install" && echo "Finish Flamingo install - $(get_timestamp)" >> $logg
+
+
+
+
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
