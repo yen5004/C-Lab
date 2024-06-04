@@ -100,7 +100,7 @@ repo_urls=(
 "https://github.com/Ciphey/Ciphey.git"
 "https://github.com/cheat/cheat.git"
 "https://github.com/gchq/CyberChef.git"
-
+"https://github.com/Tylous/ScareCrow.git"
 
 
 )
@@ -119,7 +119,9 @@ done
 # Special instructions for gits:
 
 # Special install for cheat:
- echo "Clone & install cheat - $(get_timestamp)" >> $logg
+cd $HOME && echo "cd home - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+echo "Clone & install cheat - $(get_timestamp)" >> $logg
 cd /tmp \
   && wget https://github.com/cheat/cheat/releases/download/4.4.2/cheat-linux-amd64.gz \
   && gunzip cheat-linux-amd64.gz \
@@ -129,12 +131,67 @@ echo "Clone & install cheat complete - $(get_timestamp)" >> $logg
 echo "Setting up cheat for the first time, standby..." && echo "Setting up cheat - $(get_timestamp)" >> $logg
 yes | cheat scp
 echo "cheat set up cheat complete." && echo "cheat set up cheat complete - $(get_timestamp)" >> $logg
+cd $HOME && echo "cd home - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
 
 # Special install for CyberChef:
-cd gitlabs && echo "cd gitlabs - $(get_timestamp)" >> $logg
+echo "Start CyberChef install - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 cd CyberChef && echo "cd CyberChef - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
+sudo npm install
+echo "export NODE_OPTIONS=--max_old_space_size=2048" >> ~/.bashrc
+echo "Finish CyberChef install - $(get_timestamp)" >> $logg
+
+# Special install for ScareCrow:
+echo "Start ScareCrow install - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd ScareCrow && echo "cd ScareCrow - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+
+# First ensure Golang is installed (ScareCrow cont.)
+sudo apt install -y golang  && echo "sudo apt install -y golang - $(get_timestamp)" >> $logg
+
+#Add the following lines to ~/.bashrc file:
+echo "export GOROOT=/usr/lib/go" >> ~/.bashrc
+echo "export GOPATH=$HOME/go" >> ~/.bashrc
+echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.bashrc
+
+# Reload the .bashrc
+source ~/.bashrc
+
+# Create test program go Golang
+touch HelloWorld_Go_Test.go
+echo -e "package main\nimport \"fmt\"\nfunc main() {\n      fmt.Printf(\"GOlang install sucessful! Hello, world!\\n\")\n}" >> HelloWorld_Go_Test.go
+go build Hello.go
+sleep 5
+echo "Golang install sucess! Continue with ScareCrow install"
+echo "Golang install sucess! Continue with ScareCrow install - $(get_timestamp)" >> $logg 
+go get github.com/fatih/color && echo "go get github.com fatih/color  - $(get_timestamp)" >> $logg
+go get github.com/yeka/zip && echo "go get github.com yeka/zip  - $(get_timestamp)" >> $logg
+go get github.com/josephspurrier/goversioninfo && echo "go get github.com josephspurrier/goversioninfo  - $(get_timestamp)" >> $logg
+go get github.com/Binject/debug/pe && echo "go get github.com Binject/debug/pe - $(get_timestamp)" >> $logg
+go get github.com/awgh/rawreader && echo "go get github.com  awgh/rawreader - $(get_timestamp)" >> $logg
+openssl
+osslsigncode
+mingw-w64
+
+sudo apt install -y golang mingw-w64 && echo "sudo apt install -y golang mingw-w64  - $(get_timestamp)" >> $logg
+
+
+
+# Built it
+go build ScareCrow.go
+
+
+echo "export NODE_OPTIONS=--max_old_space_size=2048" >> ~/.bashrc
+echo "Finish ScareCrow install - $(get_timestamp)" >> $logg
+
+
+
+
 
 
 
@@ -156,6 +213,8 @@ echo "Finish python install of updog..." && echo "Fininsh python install of updo
 cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 sudo apt install -y flameshot && echo "sudo apt install -y flameshot - $(get_timestamp)" >> $logg
+
+
 
 
 
