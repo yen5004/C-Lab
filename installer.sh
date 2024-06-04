@@ -174,19 +174,13 @@ go get github.com/yeka/zip && echo "go get github.com yeka/zip  - $(get_timestam
 go get github.com/josephspurrier/goversioninfo && echo "go get github.com josephspurrier/goversioninfo  - $(get_timestamp)" >> $logg
 go get github.com/Binject/debug/pe && echo "go get github.com Binject/debug/pe - $(get_timestamp)" >> $logg
 go get github.com/awgh/rawreader && echo "go get github.com  awgh/rawreader - $(get_timestamp)" >> $logg
-openssl
-osslsigncode
-mingw-w64
-
-sudo apt install -y golang mingw-w64 && echo "sudo apt install -y golang mingw-w64  - $(get_timestamp)" >> $logg
-
-
+sudo apt install -y openssl && echo "sudo apt install -y openssl  - $(get_timestamp)" >> $logg
+sudo apt install -y osslsigncode && echo "sudo apt install -y osslsigncode  - $(get_timestamp)" >> $logg
+sudo apt install -y mingw-w64 && echo "sudo apt install -y mingw-w64  - $(get_timestamp)" >> $logg
 
 # Built it
 go build ScareCrow.go
-
-
-echo "export NODE_OPTIONS=--max_old_space_size=2048" >> ~/.bashrc
+echo "Finish ScareCrow install"
 echo "Finish ScareCrow install - $(get_timestamp)" >> $logg
 
 
