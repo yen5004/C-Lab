@@ -1,14 +1,12 @@
 !#/bin/bash
-#Helper script to assist in loading of github repps and seeting up kits
+#Helper script to assist in loading of github repos and setting up kits
 
-
-
-#check for "C_lab" folder exisits in home directory and if not creates one
 #relevant files will be stored here
-sudo ls
-clear
+sudo ls # get sudo before we start
+echo "Clearing screen before we start..."
+sleep 4 && clear
 
-#variables
+# Declare variables
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Create function for time stamp
 get_timestamp() {
@@ -17,59 +15,60 @@ get_timestamp() {
 }
 
 #create variable for default folder
-folder="$HOME/C_lab"
+project="C_lab"
+folder="$HOME/$project"
 
-
-if [ ! -d "$HOME/C_lab" }; then
-  echo "C_lab folder not found. Creating..."
-  mkdir "$HOME/C_lab"
-  echo "C_lab folder created successfully."
+#check to see if "project" folder exisits in home directory and if not creates one
+if [ ! -d "$folder" }; then
+  echo "$project folder not found. Creating..."
+  mkdir "$folder"
+  echo "$project folder created successfully."
 else  
-  echo "C_lab folder already exists"
+  echo "$project folder already exists"
 fi
-
-
 
 #change to default folder
 cd $folder
 
 #create install log
-if [ ! -d "$HOME/C_lab/install_log" ]; then
-    echo "C_lab folder not found. Creating..."
-    sudo touch "$HOME/C_lab/install_log"
+if [ ! -d "$folder/install_log" ]; then
+    echo "$project folder not found. Creating..."
+    sudo touch "$folder/install_log"
     echo "install_log created successfully."
 else
     echo "install_log folder already exists."
 fi
 
+echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
 
-
-echo -e "Install log created, begin tracking - $(get_timestamp)" >> $logg
-
-logg="$HOME/C_lab/install_log"
+logg="$HOME/$project/install_log"
 # Open new terminal to monitor install_log
-echo "Opening new terminal for monitoring of intall_log..."
+echo "Opening new terminal for monitoring of install_log..."
 sleep 4
 gnome-terminal --command="watch -n 2 cat $logg"
 echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
 
 # Update and upgrade machine
 echo "Start machine update & full upgrade - $(get_timestamp)" >> $logg
-#sudo apt update -y && sudo apt upgrade -y
-sudo apt update -y && sudo apt full-upgrade -y
+#sudo apt update -y && sudo apt upgrade -y #for normal updates
+sudo apt update -y && sudo apt full-upgrade -y #everything upgrade
 echo "Finish machine update & full upgrade - $(get_timestamp)" >> $logg
 
+# Check to see if "gitlab" folder exists in project directory and if not creates one
+# Create github folder for downloads:
+git_folder="$HOME/$folder/gitlab"
+if [ ! -d "$git_folder" }; then
+  echo "$git_folder folder not found. Creating..."
+  mkdir "$git_folder"
+  echo "$git_folder folder created successfully." && echo "$git_folder folder created successfully - $(get_timestamp)" >> $logg
+else  
+  echo "$git_folder folder already exists" && echo "$git_folder folder already exists - $(get_timestamp)" >> $logg
+fi
 
-
-#create gitlab folder for downloads:
-cd $folder
-mkdir gitlabs && echo "Created 'gitlabs' folder - $(get_timestamp)" >> $logg
-cd gitlabs && echo "cd gitlabs - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd $git_folder && "echo cd $git_folder - $(get_timestamp)" >> $logg && echo "pwd: $PWD - $(get_timestamp)" >> $logg
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Download the following gitlab repos:
-
 repo_urls=(
 # List of GitLab reps urls:
 "https://github.com/yen5004/1-liner-ls--la-.git"
@@ -108,15 +107,15 @@ repo_urls=(
 "https://github.com/tanabe/markdown-live-preview.git"
 "https://github.com/securisec/chepy.git"
 "https://github.com/itm4n/PrivescCheck.git"
-#"https://github.com/topotam/PetitPotam.git"
-#"https://github.com/peass-ng/PEASS-ng.git"
-#"https://github.com/MWR-CyberSec/PXEThief.git"
+"https://github.com/topotam/PetitPotam.git"
+"https://github.com/peass-ng/PEASS-ng.git"
+"https://github.com/MWR-CyberSec/PXEThief.git"
 #""
 #""
 )
 
 # Directory of where repos will be cloned:
-clone_dir="$folder/gitlabs"
+clone_dir="$git_folder"
 
 for repo_url in "${repo_urls[@]}"; do
   repo_name=$(basename "repo_url" .git) # Extract repo name from url
