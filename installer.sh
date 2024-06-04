@@ -110,7 +110,7 @@ repo_urls=(
 "https://github.com/itm4n/PrivescCheck.git"
 #"https://github.com/topotam/PetitPotam.git"
 #"https://github.com/peass-ng/PEASS-ng.git"
-#""
+#"https://github.com/MWR-CyberSec/PXEThief.git"
 #""
 #""
 )
@@ -261,6 +261,16 @@ echo "Finish python install of Ciphey..." && echo "Fininsh python install of Cip
 echo "Start python install of updog..." && echo "Start python install of updog - $(get_timestamp)" >> $logg
 pip3 install updog
 echo "Finish python install of updog..." && echo "Fininsh python install of updog - $(get_timestamp)" >> $logg
+
+echo "Start python install of PXEThief..." && echo "Start python install of PXEThief - $(get_timestamp)" >> $logg
+cd $clone_dir && echo "cd $clone_dir - $(get_timestamp)" >> $logg
+echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd flamingo && echo "cd PXEThief - $(get_timestamp)" >> $logg
+pip install -r requirements.txt
+echo "Finish python install of PXEThief..." && echo "Fininsh python install of PXEThief - $(get_timestamp)" >> $l
+
+
+
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
