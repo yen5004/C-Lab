@@ -110,6 +110,9 @@ repo_urls=(
 "https://github.com/topotam/PetitPotam.git"
 "https://github.com/peass-ng/PEASS-ng.git"
 "https://github.com/MWR-CyberSec/PXEThief.git"
+"https://github.com/yen5004/GitLab_help.git"
+"https://github.com/yen5004/MagicNumbers.git"
+#""
 #""
 #""
 )
