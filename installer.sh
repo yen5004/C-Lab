@@ -112,9 +112,7 @@ repo_urls=(
 "https://github.com/MWR-CyberSec/PXEThief.git"
 "https://github.com/yen5004/GitLab_help.git"
 "https://github.com/yen5004/MagicNumbers.git"
-#""
-#""
-#""
+"https://github.com/yck1509/ConfuserEx.git"
 )
 
 # Directory of where repos will be cloned:
@@ -277,9 +275,12 @@ cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
 echo "pwd: $PWD - $(get_timestamp)" >> $logg
 sudo apt install -y talk talkd && echo "sudo apt install -y talk talkd - $(get_timestamp)" >> $logg
 
-cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-sudo apt install -y clamav && echo "sudo apt install -y clamav - $(get_timestamp)" >> $logg
+#cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
+#echo "pwd: $PWD - $(get_timestamp)" >> $logg
+#sudo apt install -y clamav && echo "sudo apt install -y clamav - $(get_timestamp)" >> $logg
+
+cd ~ && && echo "cd ~ $PWD - $(get_timestamp)" >> $logg
+sudo apt install -y pwncat && echo "sudo apt install -y pwncat - $(get_timestamp)" >> $logg
 
 
 
