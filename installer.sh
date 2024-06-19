@@ -1,5 +1,5 @@
 !#/bin/bash
-#Helper script to assist in loading of github repos and setting up kits
+#Helper script to assist in the loading of GitHub repos and setting up kits
 
 #relevant files will be stored here
 sudo ls # get sudo before we start
@@ -8,26 +8,41 @@ sleep 4 && clear
 
 # Declare variables
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# Create function for time stamp
+# Create a function for timestamp
 get_timestamp() {
   # display date time as "01Jun2024_01:30:00-PM"
   date +"%d%b%Y_%H:%M:%S-%p"
 }
 
-#create variable for default folder
+#########################  #########################  #########################
+#########################  #########################  #########################
+#########################  #########################  #########################
+#add the following:
+#
+#sudo apt-get install htop
+#sudo apt-get install cowsay
+#sudo apt-get install cmatrix
+
+#
+#########################  #########################  #########################
+#########################  #########################  #########################
+#########################  #########################  #########################
+
+
+#create a variable for the default folder
 project="C_lab"
 folder="$HOME/$project"
 
-#check to see if "project" folder exisits in home directory and if not creates one
+#check to see if the "project" folder exists in the home directory, and if not, create one
 if [ ! -d "$folder" }; then
   echo "$project folder not found. Creating..."
   mkdir "$folder"
   echo "$project folder created successfully."
 else  
-  echo "$project folder already exists"
+  echo "$project folder already exists."
 fi
 
-#change to default folder
+#change to the default folder
 cd $folder
 
 #create install log
@@ -42,7 +57,7 @@ fi
 echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
 
 logg="$HOME/$project/install_log"
-# Open new terminal to monitor install_log
+# Open a new terminal to monitor install_log
 echo "Opening new terminal for monitoring of install_log..."
 sleep 4
 gnome-terminal --command="watch -n 2 cat $logg"
@@ -54,7 +69,7 @@ echo "Start machine update & full upgrade - $(get_timestamp)" >> $logg
 sudo apt update -y && sudo apt full-upgrade -y #everything upgrade
 echo "Finish machine update & full upgrade - $(get_timestamp)" >> $logg
 
-# Check to see if "gitlab" folder exists in project directory and if not creates one
+# Check to see if "gitlab" folder exists in the project directory, and if not, creates one
 # Create github folder for downloads:
 git_folder="$HOME/$folder/gitlab"
 if [ ! -d "$git_folder" }; then
@@ -113,6 +128,10 @@ repo_urls=(
 "https://github.com/yen5004/GitLab_help.git"
 "https://github.com/yen5004/MagicNumbers.git"
 "https://github.com/yck1509/ConfuserEx.git"
+""
+""
+""
+
 )
 
 # Directory of where repos will be cloned:
