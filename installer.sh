@@ -130,7 +130,7 @@ repo_urls=(
 "https://github.com/yen5004/updog.git"
 "https://github.com/yen5004/cheat_helper.git"
 "https://github.com/yen5004/More_dots.git"
-""
+"https://github.com/yen5004/SCRIPTS.git"
 
 )
 
