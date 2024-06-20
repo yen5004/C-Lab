@@ -291,10 +291,12 @@ cd $git_folder
 #check to see if "Golang_folder" folder exisits in $git_folder and if not creates one
 if [ ! -d "go_folder" ]; then
 	echo "Golang_folder not found. Creating..."
-	mkdir -p "$go_folder" && sudo chmod 777 "$go_folder" && cd "$go_folder" || exit 1
+	sudo mkdir -p "$go_folder" && sudo chmod 777 "$go_folder" && cd "$go_folder" || exit 1
 	echo "Golang_folder created at: $PWD - $(get_timestamp)" | tee -a $logg
+ 	cd $gofolder
 else
 	echo "Golang_folder already exists at: $PWD - $(get_timestamp)" | tee -a $logg
+ 	cd $gofolder
 fi
 
 sudo git clone https://github.com/Tylous/ScareCrow.git
