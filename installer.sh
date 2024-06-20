@@ -1,115 +1,121 @@
-!#/bin/bash
-#Helper script to assist in the loading of GitHub repos and setting up kits
+#!/bin/bash
+#Helper script to assist in loading of github repos and setting up kits
 
 #relevant files will be stored here
 sudo ls # get sudo before we start
 echo "Clearing screen before we start..."
-sleep 4 && clear
+sleep .5 && clear
 
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Declare variables
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# Create a function for timestamp
+
+# Create time stamp function
 get_timestamp() {
   # display date time as "01Jun2024_01:30:00-PM"
   date +"%d%b%Y_%H:%M:%S-%p"
 }
 
-#########################  #########################  #########################
-#########################  #########################  #########################
-#########################  #########################  #########################
-#add the following:
-#
-#sudo apt-get install htop
-#sudo apt-get install cowsay
-#sudo apt-get install cmatrix
+project="C_lab" # Main folder for storage of downloads
+folder="$HOME/$project" # Path to project folder where downloads will go
+logg="$folder/install_log" # Log used to record where programs are stored
+git_folder="$folder/GitHub" # Folder used to store GitHub repos
+go_folder="$folder/Golang_folder"
 
-#
-#########################  #########################  #########################
-#########################  #########################  #########################
-#########################  #########################  #########################
-
-
-#create a variable for the default folder
-project="C_lab"
-folder="$HOME/$project"
-
-#check to see if the "project" folder exists in the home directory, and if not, create one
-if [ ! -d "$folder" }; then
+#check to see if "project" folder exisits in home directory and if not creates one
+cd ~
+if [ ! -d "$folder" ]; then
   echo "$project folder not found. Creating..."
   mkdir "$folder"
   echo "$project folder created successfully."
 else  
-  echo "$project folder already exists."
+  echo "$project folder already exists"
 fi
 
-#change to the default folder
+#change to default folder
 cd $folder
 
-#create install log
+#create install_log
 if [ ! -d "$folder/install_log" ]; then
-    echo "$project folder not found. Creating..."
-    sudo touch "$folder/install_log"
+    echo "install_log not found. Creating..."
+    sudo mkdir -p "$folder/install_log"
+    sudo chmod 777 "$folder/install_log" # install_log reffered to var name $logg
     echo "install_log created successfully."
 else
     echo "install_log folder already exists."
 fi
 
-echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
+echo "Install log located at $folder/install_log - $(get_timestamp)" | tee -a $logg
+echo "Install log created, begin tracking - $(get_timestamp)" | tee -a $logg
 
-logg="$HOME/$project/install_log"
-# Open a new terminal to monitor install_log
-echo "Opening new terminal for monitoring of install_log..."
-sleep 4
-gnome-terminal --command="watch -n 2 cat $logg"
-echo "Install log created, begin tracking - $(get_timestamp)" >> $logg
+# Open new terminal to monitor install_log
+echo "Opening new terminal to monitor install_log..."
+gnome-terminal --command="watch -n .5 tail -f $logg"
+sleep 3
 
-# Update and upgrade machine
-echo "Start machine update & full upgrade - $(get_timestamp)" >> $logg
+# Update and upgrade machine ########
+###echo "Start machine update & full upgrade - $(get_timestamp)" >> $logg
 #sudo apt update -y && sudo apt upgrade -y #for normal updates
-sudo apt update -y && sudo apt full-upgrade -y #everything upgrade
-echo "Finish machine update & full upgrade - $(get_timestamp)" >> $logg
+#sudo apt update -y && sudo apt full-upgrade -y #everything upgrade
+###echo "Finish machine update & full upgrade - $(get_timestamp)" >> $logg
 
-# Check to see if "gitlab" folder exists in the project directory, and if not, creates one
-# Create github folder for downloads:
-git_folder="$HOME/$folder/gitlab"
-if [ ! -d "$git_folder" }; then
-  echo "$git_folder folder not found. Creating..."
-  mkdir "$git_folder"
-  echo "$git_folder folder created successfully." && echo "$git_folder folder created successfully - $(get_timestamp)" >> $logg
-else  
-  echo "$git_folder folder already exists" && echo "$git_folder folder already exists - $(get_timestamp)" >> $logg
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# apt installs:
+
+cd $HOME
+function install_apt_tools() {
+echo "starting install of apt tools"
+    for tool in $@; do
+        if ! dpkg -l | grep -q "^ii tool": then
+	    sudo apt install -y "$tool" 2<&1 && echo "Installed apt $tool - $(get_timestamp)" | tee -a $logg
+	else
+	    echo "Tool $tool is already installed. $(get_timestamp)" | tee -a $logg
+	fi
+    done
+}
+
+#list out tools for apt install below
+install_apt_tools flameshot talk talkd pwncat openssl osslsigncode mingw-w64 nodejs npm nim cmake golang cmatrix cowsay htop
+
+# Special install for cheat:
+cd $HOME
+
+#Check if the 'cheat' tool is installed, and install it if not
+echo "Checking install status of 'cheat' tool"
+if ! command -v cheat >/dev/null 2>&1; then
+    echo "Installing 'cheat'"
+    cd /tmp \
+    && wget https://github.com/cheat/cheat/releases/download/4.4.2/cheat-linux-amd64.gz \
+    && gunzip cheat-linux-amd64.gz \
+    && chmod +x cheat-linux-amd64 \
+    && sudo mv cheat-linux-amd64 /usr/local/bin/cheat
+    echo "Installed 'cheat' - $(get_timestamp)" | tee -a $logg
+    echo "Setting up cheat for the first time, standby..."
+    yes | cheat scp
+    echo "Set up of 'cheat' complete at: /usr/local/bin/cheat - $(get_timestamp)" | tee -a $logg
+else
+    echo "Tool 'cheat' is already installed. $(get_timestamp)" | tee -a $logg
 fi
 
-cd $git_folder && "echo cd $git_folder - $(get_timestamp)" >> $logg && echo "pwd: $PWD - $(get_timestamp)" >> $logg
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# Check to see if "gitlab" folder exists in project directory and if not creates one
+# Create github folder for downloads:
+
+if [ ! -d "$git_folder" ]; then
+  echo "$git_folder folder not found. Creating..."
+  sudo mkdir "$git_folder" && sudo chmod 777 "$git_folder"
+  echo "$git_folder folder created successfully. - $(get_timestamp)" | tee -a $logg
+else  
+  echo "$git_folder folder already exists" | tee -a $logg
+fi
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+cd $git_folder
 # Download the following gitlab repos:
 repo_urls=(
 # List of GitLab reps urls:
-"https://github.com/nyxgeek/bashscan.git"
-"https://github.com/dafthack/SharpUp.git"
-"https://github.com/Hack-the-box/PowerShellMafia.git"
-"https://github.com/dafthack/HostRecon.git"
-"https://github.com/dafthack/RDPSpray.git"
-"https://github.com/dafthack/Misc-Powershell-Scripts.git"
-"https://github.com/frizb/MSF-Venom-Cheatsheet.git"
-"https://github.com/swisskyrepo/PayloadsAllTheThings.git"
-"https://github.com/initstring/uptux.git"
-"https://github.com/Hack-the-box/unicorn.git"
-"https://github.com/andrewjkerr/security-cheatsheets.git"
-"https://github.com/0x09AL/RdpThief.git"
-"https://github.com/Ciphey/Ciphey.git"
-"https://github.com/cheat/cheat.git"
-"https://github.com/gchq/CyberChef.git"
-"https://github.com/Tylous/ScareCrow.git"
-"https://github.com/burrowers/garble.git"
-"https://github.com/tanabe/markdown-live-preview.git"
-"https://github.com/securisec/chepy.git"
-"https://github.com/itm4n/PrivescCheck.git"
-"https://github.com/topotam/PetitPotam.git"
-"https://github.com/peass-ng/PEASS-ng.git"
-"https://github.com/MWR-CyberSec/PXEThief.git"
-"https://github.com/yck1509/ConfuserEx.git"
 "https://github.com/yen5004/1-liner-ls--la-.git"
 "https://github.com/yen5004/ZIP_TAR.git"
 "https://github.com/yen5004/Encrypt_Decrypt.git"
@@ -122,187 +128,324 @@ repo_urls=(
 "https://github.com/yen5004/SCP_file_sender.git"
 "https://github.com/yen5004/tmux_quad_screen_user_input.git"
 "https://github.com/yen5004/tmux_script.git"
+"https://github.com/nyxgeek/bashscan.git"
 "https://github.com/yen5004/Bash-Oneliner.git"
+"https://github.com/dafthack/SharpUp.git"
+"https://github.com/Hack-the-box/PowerShellMafia.git"
+"https://github.com/dafthack/HostRecon.git"
+"https://github.com/dafthack/RDPSpray.git"
+"https://github.com/dafthack/Misc-Powershell-Scripts.git"
+"https://github.com/frizb/MSF-Venom-Cheatsheet.git"
+"https://github.com/swisskyrepo/PayloadsAllTheThings.git"
+"https://github.com/initstring/uptux.git"
+"https://github.com/Hack-the-box/unicorn.git"
+"https://github.com/andrewjkerr/security-cheatsheets.git"
 "https://github.com/yen5004/DevMal_U.git"
 "https://github.com/yen5004/1-liner-keep-alive.git"
+"https://github.com/0x09AL/RdpThief.git"
+"https://github.com/yen5004/updog.git"
+"https://github.com/Ciphey/Ciphey.git"
+"https://github.com/cheat/cheat.git"
+"https://github.com/gchq/CyberChef.git"
+"https://github.com/burrowers/garble.git"
+"https://github.com/tanabe/markdown-live-preview.git"
+"https://github.com/securisec/chepy.git"
+"https://github.com/itm4n/PrivescCheck.git"
+"https://github.com/topotam/PetitPotam.git"
+"https://github.com/peass-ng/PEASS-ng.git"
+"https://github.com/MWR-CyberSec/PXEThief.git"
 "https://github.com/yen5004/GitLab_help.git"
 "https://github.com/yen5004/MagicNumbers.git"
-"https://github.com/yen5004/updog.git"
-"https://github.com/yen5004/cheat_helper.git"
-"https://github.com/yen5004/More_dots.git"
+"https://github.com/yck1509/ConfuserEx.git"
+"https://github.com/tmux-plugins/tmux-logging.git"
+"https://github.com/Orange-Cyberdefense/ocd-mindmaps.git"
 "https://github.com/yen5004/SCRIPTS.git"
-
+"https://github.com/yen5004/More_dots.git"
+"https://github.com/yen5004/cheat_helper.git"
+"https://github.com/yen5004/Bash-Oneliner.git"
+"https://github.com/TheWover/donut.git"
+"https://github.com/optiv/Freeze.git"
 )
 
 # Directory of where repos will be cloned:
+
+echo "       ^"  | tee -a $logg
+echo "      ^^^" | tee -a $logg
+echo "     ^^^^^"| tee -a $logg
+echo "      ^^^" | tee -a $logg
+echo "       ^"  | tee -a $logg
+
+
 for repo_url in "${repo_urls[@]}"; do
-  repo_name=$(basename "repo_url" .git) # Extract repo name from url
-  echo "Cloning $repo_name from $repo_url..." && echo "Cloned $repo_name from $repo_url into $git_folder - $(get_timestamp)" >> $logg
-  sudo git clone "repo_url" "$git_folder/$repo_name"
+  repo_name=$(basename "$repo_url" .git) # Extract repo name from url
+  if [ ! -d "$git_folder/$repo_name" ]; then # Check if directory already exists
+  echo "Cloning $repo_name from $repo_url... - $(get_timestamp)" | tee -a $logg
+  #sudo git clone "repo_url" "$git_folder/$repo_name" || { echo "Failed to clone $repo_name"; exit 1; } # Clone repo and handle errors
+  sudo git clone "$repo_url" "$git_folder/$repo_name" || { echo "Failed to clone $repo_name"; exit 1; } # Clone repo and handle errors
+  else
+  	echo "Repo $repo_name already cloned at $git_folder/$repo_name. - $(get_timestamp)" | tee -a $logg
+  fi 
 done
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# Special instructions for gits:
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Special Git installs:
 
-# Special install for cheat:
-cd $HOME && echo "cd home - $(get_timestamp)" >> $logg && echo "pwd: $PWD - $(get_timestamp)" >> $logg
-echo "Start cheat install - $(get_timestamp)" >> $logg
-cd /tmp \
-  && wget https://github.com/cheat/cheat/releases/download/4.4.2/cheat-linux-amd64.gz \
-  && gunzip cheat-linux-amd64.gz \
-  && chmod +x cheat-linux-amd64 \
-  && sudo mv cheat-linux-amd64 /usr/local/bin/cheat
-echo "Clone & install cheat complete - $(get_timestamp)" >> $logg
-echo "Setting up cheat for the first time, standby..." && echo "Setting up cheat - $(get_timestamp)" >> $logg
-yes | cheat scp
-echo "cheat set up cheat complete." && echo "cheat set up cheat complete - $(get_timestamp)" >> $logg
-cd $HOME && echo "cd home - $(get_timestamp)" >> $logg && echo "pwd: $PWD - $(get_timestamp)" >> $logg
+#tmux plug in for scripting
+sudo cp $git_folder/tpm ~/.tmux/plugins/tpm
+echo 'set -g @plugin "tmux-plugins/tmux-logging' >> ~/.tmux.conf
+tmux source ~/.tmux.conf
+~/.tumux/plugins/tpm/scripts/install_plugins.sh
+echo "Tmux-logging plugin installed - $(get_timestamp)" | tee -a $logg
+
 
 # Special install for CyberChef:
-echo "Start CyberChef install" && echo "Start CyberChef install - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $PWD - $(get_timestamp)" >> $logg
-cd CyberChef && echo "cd $PWD - $(get_timestamp)" >> $logg
-sudo npm install
-echo "export NODE_OPTIONS=--max_old_space_size=2048" >> ~/.bashrc
-echo "Finish CyberChef install - $(get_timestamp)" >> $logg
+if ! command -v Cyberchef >/dev/null 2>&1; then
+    echo "Cyberchef not found. Installing ..."
+    cd $git_folder && sudo chmod 777 CyberChef && cd CyberChef
+    sudo npm install
+    echo "export NODE_OPTIONS=--max_old_space_size=2048" >> ~/.bashrc
+    source ~/.bashrc  # Reload the .bashrc
+    echo "Installed CyberChef at: $PWD - $(get_timestamp)" | tee -a $logg
+    cd $git_folder
+else
+    echo "CyberChef is already installed - $(get_timestamp)" | tee -a $logg
+    cd $git_folder
+fi
 
-#left off here
+# Special install for mardkdown_live_preview:
+if ! command -v markdown-live-preview >/dev/null 2>&1; then
+    echo "markdown-live-preview not found. Installing ..."
+    cd $git_folder
+    cd markdown-live-preview && sudo chmod 777 markdown-live-preview
+    make setup && make build
+    echo "Installed markdown_live_preview at: $PWD - $(get_timestamp)" | tee -a $logg
+else
+    echo "markdown-live-preview is already installed - $(get_timestamp)" | tee -a $logg
+    cd $git_folder
+fi
+
+# Special install for pe-bear:
+if ! command -v pe-bear >/dev/null 2>&1; then
+    echo "pe-bear not found. Installing ..."
+    cd $git_folder
+    sudo git clone --recursive https://github.com/hasherezade/pe-bear.git && echo "sudo git clone https://github.com/hasherezade/pe-bear.git - $(get_timestamp)" | tee -a $logg
+    sudo chmod 777 pe-bear && cd $git_folder/pe-bear
+    ./build_qt6.sh
+    echo "Installed pe-bear at: $PWD - $(get_timestamp)" | tee -a $logg
+    cd $git_folder
+else
+    echo "pe-bear is already installed - $(get_timestamp)" | tee -a $logg
+    cd $git_folder
+fi
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Python installs
+
+# Start  python install of Ciphey
+cd $git_folder
+python3 -m pip install ciphey --upgrade
+echo "Installed Ciphey - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
+# Start python install of updog
+cd $git_folder
+pip3 install updog
+echo "Installed updog - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
+#Start python install of PXEThief
+cd $git_folder && sudo chmod 777 PXEThief
+cd PXEThief
+pip install -r requirements.txt
+echo "Installed PXEThief at: $PWD  - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
+# Special install for Chepy:
+cd $git_folder && sudo chmod 777 chepy
+cd chepy
+pip3 install -e
+pip install .
+pip install pyinstaller
+pyinstaller cli.py --name chepy --onefile
+echo "Installed Chepy at: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
+# Special install for donut:
+cd $git_folder && sudo chmod 777 donut
+cd donut
+pip3 install .
+pip install donut-shellcode
+echo "Installed donut at: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Golang installs:
+
 # Special install for ScareCrow:
-echo "Start ScareCrow install" && echo "Start ScareCrow install - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $PWD - $(get_timestamp)" >> $logg
-cd ScareCrow && echo "cd $PWD - $(get_timestamp)" >> $logg
+echo "Start ScareCrow install"
+cd $git_folder
+# Re-stating variable" go_folder="$folder/Golang_folder"
+#check to see if "Golang_folder" folder exisits in $git_folder and if not creates one
+if [ ! -d "go_folder" ]; then
+	echo "Golang_folder not found. Creating..."
+	mkdir -p "$go_folder" && sudo chmod 777 "$go_folder" && cd "$go_folder" || exit 1
+	echo "Golang_folder created at: $PWD - $(get_timestamp)" | tee -a $logg
+else
+	echo "Golang_folder already exists at: $PWD - $(get_timestamp)" | tee -a $logg
+fi
 
-# First ensure Golang is installed (ScareCrow cont.)
-sudo apt install -y golang  && echo "sudo apt install -y golang - $(get_timestamp)" >> $logg
+sudo git clone https://github.com/Tylous/ScareCrow.git
+sudo chmod 777 "$go_folder/ScareCrow"
+cd "$go_folder"
 
 #Add the following lines to ~/.bashrc file:
 echo "export GOROOT=/usr/lib/go" >> ~/.bashrc
 echo "export GOPATH=$HOME/go" >> ~/.bashrc
 echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.bashrc
+source ~/.bashrc # Reload the .bashrc
 
-# Reload the .bashrc
-source ~/.bashrc
+# Initialize the module (if not already initialized)
+#go_folder="$folder/Golang_folder"
+cd "$go_folder"
+go mod init "$go_folder"
+
+# Install Golang dependencies & compile
+go get github.com/fatih/color && echo "Installed Golang dependencies for /faith/color - $(get_timestamp)" | tee -a $logg
+go get github.com/yeka/zip && echo "Installed Golang dependencies for /yeka/zip - $(get_timestamp)" | tee -a $logg
+go get github.com/josephspurrier/goversioninfo && echo "Installed Golang dependencies for /josephspurrier/goversioninfo - $(get_timestamp)" | tee -a $logg
+go get github.com/Binject/debug/pe && echo "Installed Golang dependencies for /Binject/debug/pe - $(get_timestamp)" | tee -a $logg
+go get github.com/awgh/rawreader && echo "Installed Golang dependencies for /awgh/rawreader - $(get_timestamp)" | tee -a $logg
+curl https://github.com/mvdan/garble/releases/download/v1.3.0/garble_linux_amhttps://github.com/mvdan/garble/releases/download/v1.3.0/garble_linx_amd64.tar.gz | tar xzf -
+sudo mv garble /usr/local/bin/ # or similar for your system
+
+go get mvdan.cc/garble@latest && echo "Installed Golang dependencies for /garble@latest - $(get_timestamp)" | tee -a $logg
 
 # Create test program go Golang
-touch HelloWorld_Go_Test.go
-echo -e "package main\nimport \"fmt\"\nfunc main() {\n      fmt.Printf(\"GOlang install sucessful! Hello, world!\\n\")\n}" >> HelloWorld_Go_Test.go
-go build Hello.go
-sleep 5
-echo "Golang install sucess! Continue with ScareCrow install"
-echo "Golang install sucess! Continue with ScareCrow install - $(get_timestamp)" >> $logg 
-go get github.com/fatih/color && echo "go get github.com fatih/color  - $(get_timestamp)" >> $logg
-go get github.com/yeka/zip && echo "go get github.com yeka/zip  - $(get_timestamp)" >> $logg
-go get github.com/josephspurrier/goversioninfo && echo "go get github.com josephspurrier/goversioninfo  - $(get_timestamp)" >> $logg
-go get github.com/Binject/debug/pe && echo "go get github.com Binject/debug/pe - $(get_timestamp)" >> $logg
-go get github.com/awgh/rawreader && echo "go get github.com  awgh/rawreader - $(get_timestamp)" >> $logg
-sudo apt install -y openssl && echo "sudo apt install -y openssl  - $(get_timestamp)" >> $logg
-sudo apt install -y osslsigncode && echo "sudo apt install -y osslsigncode  - $(get_timestamp)" >> $logg
-sudo apt install -y mingw-w64 && echo "sudo apt install -y mingw-w64  - $(get_timestamp)" >> $logg
+#new code:
+cat << 'EOF' > HelloWorld_Go_Test.go
+package main
+import (
+	"fmt"
+	"github.com/fatih/color"
+)
+func main() {
+	c := color.New(color.FgGreen).Add(color.Bold)
+	c.Println(GOlang install sucessful! Hello, world!")
+}
+EOF
+echo "Running test Go program.."
+sleep 2
+sudo go run HelloWorld_Go_Test.go | tee -a $logg
 
-# Built it
+## OG code below
+#touch HelloWorld_Go_Test.go
+#echo -e "package main\nimport \"fmt\"\nfunc main() {\n      fmt.Printf(\"GOlang install sucessful! Hello, world!\")\n}" >> HelloWorld_Go_Test.go
+
+#sudo go run HelloWorld_Go_Test.go | tee -a $logg
+#sleep 5
+
+echo "Golang install sucess! Continue with ScareCrow install - $(get_timestamp)" | tee -a $logg
+cd "$go_folder/ScareCrow"
 go build ScareCrow.go
-echo "Finish ScareCrow install" && echo "Finish ScareCrow install - $(get_timestamp)" >> $logg
-
-
-# Special install for garble:
-echo "Start garble install" && echo "Start garble install - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-cd garble && echo "cd garble - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-go install mvdan.cc/garble@latest
-echo "Finish garble install" && echo "Finish garble install - $(get_timestamp)" >> $logg
+echo "Installed ScareCrow at: $PWD - $(get_timestamp)" | tee -a $logg
 
 # Special install for garble:
-echo "Start markdown_live_preview install" && echo "Start garble install - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-cd markdown-live-preview && echo "cd markdown-live-preview - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-make setup && make build
-echo "Finish markdown_live_preview install" && echo "Finish markdown_live_preview install - $(get_timestamp)" >> $logg
-
-# Special install for pe-bear:
-echo "Start pe-bear install" && echo "Start garble install - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-sudo git clone --recursive https://github.com/hasherezade/pe-bear.git && echo "sudo git clone --recursive https://github.com/hasherezade/pe-bear.git - $(get_timestamp)" >> $logg
-cd pe-bear && echo "cd pe-bear - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-./build_qt6.sh
-echo "Finish pe-bear install" && echo "Finish pe-bear install - $(get_timestamp)" >> $logg
-
-# Special install for Chepy:
-echo "Start Chepy install" && echo "Start Chepy install - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-cd chepy && echo "cd chepy - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-pip3 install -e
-pip install .
-pip install pyinstaller
-pyinstaller cli.py --name chepy --onefile
-echo "Finish Chepy install" && echo "Finish Chepy install - $(get_timestamp)" >> $logg
+echo "Requested go install mvdan.cc/garble@latest - $(get_timestamp)" | tee -a $logg
 
 # Special install for Flamingo:
-echo "Start Flamingo install" && echo "Start Flamingo install - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-cd flamingo && echo "cd flamingo - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
+cd $git_folder
 go get -u -v github.com/atredispartners/flamingo
+#sudo chmod 777 flamingo && cd flamingo
 go install -v github.com/atredispartners/flamingo
-echo "Finish Flamingo install" && echo "Finish Flamingo install - $(get_timestamp)" >> $logg
+echo "Installed Flamingo at: $git_folder/flamingo - $(get_timestamp)" | tee -a $logg
+
+# Special install for Freeze:
+cd $git_folder
+sudo chmod 777 Freeze && cd Freeze
+go build Freeze.go
+echo "Installed Freeze at: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
+###############################
+# Install command logger
+
+cd $git_folder
+sudo mkdir "cmd_logr_install.sh"
+cd "cmd_logr_install.sh" && sudo chmod 777 "cmd_logr_install.sh"
+cat << 'EOF' > cmd_logr_install.sh
+#Install logger script
+echo "Script created by Franco M." | tee -a ~/.zshrc
+echo "Script created by Franco M." | tee -a ~/.bashrc
+
+#Prompt username
+echo "Please enter your username"
+
+#Read user input 
+read -r name
+
+#Store username in the .zshrc
+echo "export NAME=$name" >> ~/.zshrc
+
+#Display time in terminal
+#echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.zshrc
+echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.zshrc
+
+#Sent logs to a file with time stamp
+echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.zshrc
 
 
+#Confirm user is stored and display IP info and more
+echo "echo TED-User: '$name'" >> ~/.zshrc
+echo "ifconfig" >> ~/.zshrc
+echo 'note="use exit to  close script"' >> ~/.zshrc
+echo "NOTE: Use EXIT to close Log Script"
+echo 'echo $note' >> ~/.zshrc
 
 
+#Store username in the .bashrc
+echo "export NAME=$name" >> ~/.bashrc
+#echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.bashrc
+echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.bashrc  
+
+#Sent logs to a file with time stamp
+echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.bashrc
 
 
+#Confirm user is stored and display IP info and more
+echo "TED-User: '$name'" >> ~/.bashrc
+echo "ifconfig" >> ~/.bashrc
+echo 'note="use exit to  close script"' >> ~/.bashrc
+echo 'echo $note' >> ~/.bashrc
+echo "Command logger install complete - $(get_timestamp)" | tee -a $logg
+echo "cmd_logr_install.sh finished!" - $(get_timestamp)" | tee -a $logg
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# Python installs
+EOF
 
-# Start install of Ciphey
-echo "Start python install of Ciphey..." && echo "Start python install of Ciphey - $(get_timestamp)" >> $logg
-python3 -m pip install ciphey --upgrade
-echo "Finish python install of Ciphey..." && echo "Fininsh python install of Ciphey - $(get_timestamp)" >> $logg
+echo "Copied 'cmd_logr_install.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
+./cmd_logr_install.sh
+echo "Installed 'cmd_logr_install.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
 
-# Start install of updog
-echo "Start python install of updog..." && echo "Start python install of updog - $(get_timestamp)" >> $logg
-pip3 install updog
-echo "Finish python install of updog..." && echo "Fininsh python install of updog - $(get_timestamp)" >> $logg
+################
+# Install More_dots bashrc/zshrc custom dot files
+cd $git_folder
+cd More_dots
+sudo chmod 777 add_aliases.sh
+./add_aliases.sh
+echo "Installed 'add_aliases.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
 
-echo "Start python install of PXEThief..." && echo "Start python install of PXEThief - $(get_timestamp)" >> $logg
-cd $git_folder && echo "cd $git_folder - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-cd flamingo && echo "cd PXEThief - $(get_timestamp)" >> $logg
-pip install -r requirements.txt
-echo "Finish python install of PXEThief..." && echo "Fininsh python install of PXEThief - $(get_timestamp)" >> $l
+################
+# Install cheat_helper personalized cheats
+cd $git_folder
+cd cheat_helper
+sudo chmod 777 personal_cheatsheets.sh
+./personal_cheatsheets.sh
+echo "Installed 'personal_cheatsheets.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
 
-
-
-
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-# apt install section
-cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-sudo apt install -y flameshot && echo "sudo apt install -y flameshot - $(get_timestamp)" >> $logg
-
-cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
-echo "pwd: $PWD - $(get_timestamp)" >> $logg
-sudo apt install -y talk talkd && echo "sudo apt install -y talk talkd - $(get_timestamp)" >> $logg
-
-#cd ~ && && echo "cd ~ - $(get_timestamp)" >> $logg
-#echo "pwd: $PWD - $(get_timestamp)" >> $logg
-#sudo apt install -y clamav && echo "sudo apt install -y clamav - $(get_timestamp)" >> $logg
-
-cd ~ && && echo "cd ~ $PWD - $(get_timestamp)" >> $logg
-sudo apt install -y pwncat && echo "sudo apt install -y pwncat - $(get_timestamp)" >> $logg
-
-
-
-
+echo "Install completed - $(get_timestamp)" | tee -a $logg
 
 
