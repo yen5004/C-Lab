@@ -66,7 +66,7 @@ cd $HOME
 function install_apt_tools() {
 echo "starting install of apt tools"
     for tool in $@; do
-        if ! dpkg -l | grep -q "^ii tool": then
+        if ! dpkg -l | grep -q "^ii $tool": then
 	    sudo apt install -y "$tool" 2<&1 && echo "Installed apt $tool - $(get_timestamp)" | tee -a $logg
 	else
 	    echo "Tool $tool is already installed. $(get_timestamp)" | tee -a $logg
