@@ -166,6 +166,10 @@ repo_urls=(
 "https://github.com/yen5004/Bash-Oneliner.git"
 "https://github.com/TheWover/donut.git"
 "https://github.com/optiv/Freeze.git"
+"https://github.com/tmux-plugins/tpm.git"
+"https://github.com/tmux-plugins/list.git"
+""
+""
 )
 
 # Directory of where repos will be cloned:
