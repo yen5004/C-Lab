@@ -48,6 +48,7 @@ echo "Install log located at $folder/install_log - $(get_timestamp)" | tee -a $l
 echo "Install log created, begin tracking - $(get_timestamp)" | tee -a $logg
 
 # Open new terminal to monitor install_log
+sudo apt install -y gnome-terminal
 echo "Opening new terminal to monitor install_log..."
 gnome-terminal --command="watch -n .5 tail -f $logg"
 sleep 3
