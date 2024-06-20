@@ -39,9 +39,9 @@ if [ ! -d "$folder/install_log" ]; then
     echo "install_log not found. Creating..."
     sudo touch "$folder/install_log"
     sudo chmod 777 "$folder/install_log" # install_log reffered to var name $logg
-    echo "install_log created successfully."
+    echo "install_log created successfully. - $(get_timestamp)" | tee -a $logg
 else
-    echo "install_log folder already exists."
+    echo "install_log folder already exists. - $(get_timestamp)" | tee -a $logg
 fi
 
 echo "Install log located at $folder/install_log - $(get_timestamp)" | tee -a $logg
