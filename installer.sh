@@ -37,7 +37,7 @@ cd $folder
 #create install_log
 if [ ! -d "$folder/install_log" ]; then
     echo "install_log not found. Creating..."
-    sudo mkdir -p "$folder/install_log"
+    sudo touch "$folder/install_log"
     sudo chmod 777 "$folder/install_log" # install_log reffered to var name $logg
     echo "install_log created successfully."
 else
