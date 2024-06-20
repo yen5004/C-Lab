@@ -128,8 +128,8 @@ repo_urls=(
 "https://github.com/yen5004/GitLab_help.git"
 "https://github.com/yen5004/MagicNumbers.git"
 "https://github.com/yen5004/updog.git"
-""
-""
+"https://github.com/yen5004/cheat_helper.git"
+"https://github.com/yen5004/More_dots.git"
 ""
 
 )
