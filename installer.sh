@@ -15,7 +15,7 @@ get_timestamp() {
   date +"%d%b%Y_%H:%M:%S-%p"
 }
 
-project="C_lab" # Main folder for storage of downloads
+project="C-lab" # Main folder for storage of downloads
 folder="$HOME/$project" # Path to project folder where downloads will go
 logg="$folder/install_log" # Log used to record where programs are stored
 git_folder="$folder/GitHub" # Folder used to store GitHub repos
