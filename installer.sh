@@ -383,7 +383,9 @@ sudo touch "cmd_logr_install.sh"
 sudo chmod 777 "cmd_logr_install.sh"
 cat << 'EOF' > cmd_logr_install.sh
 #Install logger script
+echo "###########Custom Script Below###########" | tee -a ~/.zshrc
 echo "Script created by Franco M." | tee -a ~/.zshrc
+echo "###########Custom Script Below###########" | tee -a ~/.bashrc
 echo "Script created by Franco M." | tee -a ~/.bashrc
 
 #Prompt username
@@ -426,7 +428,7 @@ echo "ifconfig" >> ~/.bashrc
 echo 'note="use exit to  close script"' >> ~/.bashrc
 echo 'echo $note' >> ~/.bashrc
 echo "Command logger install complete - $(get_timestamp)" | tee -a $logg
-echo "cmd_logr_install.sh finished!" - $(get_timestamp)" | tee -a $logg
+echo "cmd_logr_install.sh finished! - $(get_timestamp)" | tee -a $logg
 
 EOF
 
