@@ -21,17 +21,17 @@ logg="$folder/install_log" # Log used to record where programs are stored
 git_folder="$folder/GitHub" # Folder used to store GitHub repos
 go_folder="$folder/Golang_folder"
 
-#check to see if "project" folder exisits in home directory and if not creates one
+#check to see if the "project" folder exists in home directory and, if not create one
 cd ~
 if [ ! -d "$folder" ]; then
   echo "$project folder not found. Creating..."
   mkdir "$folder"
-  echo "$project folder created successfully."
+  echo "$project folder created successfully. - $(get_timestamp)" | tee -a $logg
 else  
-  echo "$project folder already exists"
+  echo "$project folder already exists. - $(get_timestamp)" | tee -a $logg
 fi
 
-#change to default folder
+#change to the default folder
 cd $folder
 
 #create install_log
@@ -47,10 +47,10 @@ fi
 echo "Install log located at $folder/install_log - $(get_timestamp)" | tee -a $logg
 echo "Install log created, begin tracking - $(get_timestamp)" | tee -a $logg
 
-# Open new terminal to monitor install_log
+# Open a new terminal to monitor install_log
 sudo apt install -y gnome-terminal
 echo "Opening new terminal to monitor install_log..."
-gnome-terminal --command="watch -n .5 tail -f $logg"
+gnome-terminal --window --profile=AI -- bash -c "watch -n .5 tail -f $logg"
 sleep 3
 
 # Update and upgrade machine ########
@@ -379,8 +379,8 @@ cd $git_folder
 # Install command logger
 
 cd $git_folder
-sudo mkdir "cmd_logr_install.sh"
-cd "cmd_logr_install.sh" && sudo chmod 777 "cmd_logr_install.sh"
+sudo touch "cmd_logr_install.sh"
+sudo chmod 777 "cmd_logr_install.sh"
 cat << 'EOF' > cmd_logr_install.sh
 #Install logger script
 echo "Script created by Franco M." | tee -a ~/.zshrc
