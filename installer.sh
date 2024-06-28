@@ -383,9 +383,9 @@ sudo mkdir log && sudo chmod 777 log && cd log
 sudo touch cmd_logr_install.sh && sudo chmod 777 cmd_logr_install.sh
 cat << 'EOF' > cmd_logr_install.sh
 #Install logger script
-echo "###########Custom Script Below###########" | tee -a ~/.zshrc
+echo "###########_Custom Script Below_###########" | tee -a ~/.zshrc
 echo "Script created by Franco M." | tee -a ~/.zshrc
-echo "###########Custom Script Below###########" | tee -a ~/.bashrc
+echo "###########_Custom Script Below_###########" | tee -a ~/.bashrc
 echo "Script created by Franco M." | tee -a ~/.bashrc
 
 #Prompt username
@@ -407,7 +407,7 @@ echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'
 #Confirm user is stored and display IP info and more
 echo "echo TED-User: '$name'" >> ~/.zshrc
 echo "ifconfig" >> ~/.zshrc
-echo 'note="use exit to  close script"' >> ~/.zshrc
+echo "NOTE: Use EXIT to close Log Script" >> ~/.zshrc
 echo "NOTE: Use EXIT to close Log Script"
 echo 'echo $note' >> ~/.zshrc
 
