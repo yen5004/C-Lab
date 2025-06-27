@@ -1,5 +1,5 @@
 #!/bin/bash
-#Helper script to assist in loading of github repos and setting up kits
+#Helper script to assist in loading of github repos and setting up kits.
 
 #relevant files will be stored here
 sudo ls # get sudo before we start
