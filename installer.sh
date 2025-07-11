@@ -168,7 +168,9 @@ repo_urls=(
 "https://github.com/optiv/Freeze.git"
 "https://github.com/tmux-plugins/tpm.git"
 "https://github.com/tmux-plugins/list.git"
-""
+"https://github.com/yen5004/dns-exfil-infil.git"
+"https://github.com/yen5004/EICAR_python.git"
+"https://github.com/yen5004/dnslib.git"
 ""
 )
 
