@@ -75,7 +75,7 @@ function install_apt_tools() {
 }
 
 #list out tools for apt install below
-install_apt_tools flameshot talk talkd pwncat openssl osslsigncode mingw-w64 nodejs npm nim cmake golang cmatrix cowsay htop
+install_apt_tools flameshot pwncat openssl osslsigncode mingw-w64 nodejs npm nim cmake golang httrack htop
 
 # Special install for cheat:
 cd $HOME
@@ -257,7 +257,7 @@ cd $git_folder
 # Start python install of updog
 cd $git_folder
 pip3 install updog
-echo "Installed updog - $(get_timestamp)" | tee -a $logg
+echo "PIP installed updog - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
 #Start python install of PXEThief
@@ -268,23 +268,29 @@ echo "Installed PXEThief at: $PWD  - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
 # Special install for Chepy:
-cd $git_folder && sudo chmod 777 chepy
-cd chepy
-pip3 install -e
-pip install .
-pip install pyinstaller
-pyinstaller cli.py --name chepy --onefile
-echo "Installed Chepy at: $PWD - $(get_timestamp)" | tee -a $logg
-cd $git_folder
+#cd $git_folder && sudo chmod 777 chepy
+#cd chepy
+#pip3 install -e
+#pip install .
+#pip install pyinstaller
+#pyinstaller cli.py --name chepy --onefile
+#echo "PIP installed Chepy at: $PWD - $(get_timestamp)" | tee -a $logg
+#cd $git_folder
 
 # Special install for donut:
-cd $git_folder && sudo chmod 777 donut
-cd donut
-pip3 install .
-pip install donut-shellcode
-echo "Installed donut at: $PWD - $(get_timestamp)" | tee -a $logg
-cd $git_folder
+#cd $git_folder && sudo chmod 777 donut
+#cd donut
+#pip3 install .
+#pip install donut-shellcode
+#echo "PIP installed donut at: $PWD - $(get_timestamp)" | tee -a $logg
+#cd $git_folder
 
+# Special install for grip:
+# grips is a Python-based cli utility that renders Markdown files exactly like GitHub does, even using GitHub's own CSS for pixel-perfect accuracy.
+cd $git_folder
+pip install grip
+echo "PIP installed grip at: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -453,6 +459,8 @@ sudo chmod 777 personal_cheatsheets.sh
 ./personal_cheatsheets.sh
 echo "Installed 'personal_cheatsheets.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
+
+#https://freeipa-pentesting.popdocs.net/
 
 echo "Install completed - $(get_timestamp)" | tee -a $logg
 
