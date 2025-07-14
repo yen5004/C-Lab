@@ -121,7 +121,6 @@ repo_urls=(
 "https://github.com/yen5004/ZIP_TAR.git"
 "https://github.com/yen5004/Encrypt_Decrypt.git"
 "https://github.com/yen5004/Encode_Decode.git"
-"https://github.com/yen5004/EICAR.git"
 "https://github.com/yen5004/THM_BashScripting.git"
 "https://github.com/yen5004/THM_ToolBox-Vim.git"
 "https://github.com/yen5004/THM_AV_Evasion-Shellcode.git"
