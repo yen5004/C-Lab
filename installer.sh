@@ -75,7 +75,7 @@ function install_apt_tools() {
 }
 
 #list out tools for apt install below
-install_apt_tools flameshot pwncat openssl osslsigncode mingw-w64 nodejs npm nim cmake golang httrack htop
+install_apt_tools flameshot pwncat openssl osslsigncode mingw-w64 nodejs npm nim cmake golang httrack htop pipx
 
 # Special install for cheat:
 cd $HOME
@@ -255,7 +255,7 @@ cd $git_folder
 
 # Start python install of updog
 cd $git_folder
-pip3 install updog
+pipx install updog
 echo "PIP installed updog - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
