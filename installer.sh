@@ -408,13 +408,13 @@ echo "export NAME=$name" >> ~/.zshrc
 # echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.zshrc
 echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.zshrc
 
-#Sent logs to a file with time stamp
+# Send logs to a file with time stamp
 echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.zshrc
 
-#Confirm user is stored and display IP info and more
-echo "echo TED-User: '$name'" >> ~/.zshrc
+# Confirm user is stored and display IP info and more
+echo "echo TED-User: '$NAME'" >> ~/.zshrc
 echo "ifconfig" >> ~/.zshrc
-echo "NOTE: Use EXIT to close Log Script" >> ~/.zshrc
+echo 'note="Use EXIT to close Log Script"' >> ~/.zshrc
 echo "NOTE: Use EXIT to close Log Script"
 echo 'echo $note' >> ~/.zshrc
 
@@ -427,7 +427,7 @@ echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.bashrc
 echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.bashrc
 
 #Confirm user is stored and display IP info and more
-echo "TED-User: '$name'" >> ~/.bashrc
+echo "TED-User: '$NAME'" >> ~/.bashrc
 echo "ifconfig" >> ~/.bashrc
 echo 'note="use exit to  close script"' >> ~/.bashrc
 echo 'echo $note' >> ~/.bashrc
