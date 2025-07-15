@@ -386,26 +386,26 @@ cd $git_folder
 # Install command logger
 
 cd $git_folder
-sudo mkdir log && sudo chmod 777 log && cd log
+sudo mkdir $HOME/log && sudo chmod 777 $HOME/log && cd $HOME/log
 sudo touch cmd_logr_install.sh && sudo chmod 777 cmd_logr_install.sh
 cat << 'EOF' > cmd_logr_install.sh
-#Install logger script
+# Install logger script
 echo "###########_Custom Script Below_###########" | tee -a ~/.zshrc
-echo "Script created by Franco M." | tee -a ~/.zshrc
+echo "# Script created by Franco M." | tee -a ~/.zshrc
 echo "###########_Custom Script Below_###########" | tee -a ~/.bashrc
-echo "Script created by Franco M." | tee -a ~/.bashrc
+echo "# Script created by Franco M." | tee -a ~/.bashrc
 
-#Prompt username
+# Prompt username
 echo "Please enter your username"
 
 #Read user input 
 read -r name
 
-#Store username in the .zshrc
+# Store username in the .zshrc
 echo "export NAME=$name" >> ~/.zshrc
 
-#Display time in terminal
-#echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.zshrc
+# Display time in terminal
+# echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.zshrc
 echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.zshrc
 
 #Sent logs to a file with time stamp
@@ -418,12 +418,12 @@ echo "NOTE: Use EXIT to close Log Script" >> ~/.zshrc
 echo "NOTE: Use EXIT to close Log Script"
 echo 'echo $note' >> ~/.zshrc
 
-#Store username in the .bashrc
+# Store username in the .bashrc
 echo "export NAME=$name" >> ~/.bashrc
-#echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.bashrc
+# echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.bashrc
 echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.bashrc  
 
-#Sent logs to a file with time stamp
+# Sent logs to a file with time stamp
 echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.bashrc
 
 #Confirm user is stored and display IP info and more
