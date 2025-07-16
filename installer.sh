@@ -412,7 +412,7 @@ echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.zshrc
 echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.zshrc
 
 # Confirm user is stored and display IP info and more
-echo "echo TED-User: '$NAME'" >> ~/.zshrc
+echo "echo TED-User: $NAME" >> ~/.zshrc
 echo "ifconfig" >> ~/.zshrc
 echo 'note="Use EXIT to close Log Script"' >> ~/.zshrc
 echo "NOTE: Use EXIT to close Log Script"
@@ -427,8 +427,7 @@ echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.bashrc
 echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.bashrc
 
 #Confirm user is stored and display IP info and more
-echo "TED-User: '$NAME'" >> ~/.bashrc
-echo "ifconfig" >> ~/.bashrc
+echo "TED-User: $NAME" >> ~/.bashrc
 echo 'note="use exit to  close script"' >> ~/.bashrc
 echo 'echo $note' >> ~/.bashrc
 echo "Command logger install complete"
