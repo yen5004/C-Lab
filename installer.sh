@@ -120,6 +120,7 @@ repo_urls=(
 # REQUIRED:
 "https://github.com/yen5004/2025_cmd_logr.git"
 "https://github.com/yen5004/More_dots.git"
+"https://github.com/cheat/cheat.git"
 "https://github.com/yen5004/cheat_helper.git"
 #
 # NOT REQUIRED
@@ -151,7 +152,6 @@ repo_urls=(
 "https://github.com/0x09AL/RdpThief.git"
 "https://github.com/yen5004/updog.git"
 "https://github.com/Ciphey/Ciphey.git"
-"https://github.com/cheat/cheat.git"
 "https://github.com/gchq/CyberChef.git"
 "https://github.com/burrowers/garble.git"
 "https://github.com/tanabe/markdown-live-preview.git"
