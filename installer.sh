@@ -117,6 +117,12 @@ cd $git_folder
 # Download the following gitlab repos:
 repo_urls=(
 # List of GitLab reps urls:
+# REQUIRED:
+"https://github.com/yen5004/2025_cmd_logr.git"
+"https://github.com/yen5004/More_dots.git"
+"https://github.com/yen5004/cheat_helper.git"
+#
+# NOT REQUIRED
 "https://github.com/yen5004/1-liner-ls--la-.git"
 "https://github.com/yen5004/ZIP_TAR.git"
 "https://github.com/yen5004/Encrypt_Decrypt.git"
@@ -160,11 +166,7 @@ repo_urls=(
 "https://github.com/tmux-plugins/tmux-logging.git"
 "https://github.com/Orange-Cyberdefense/ocd-mindmaps.git"
 "https://github.com/yen5004/SCRIPTS.git"
-"https://github.com/yen5004/More_dots.git"
-"https://github.com/yen5004/cheat_helper.git"
 "https://github.com/yen5004/Bash-Oneliner.git"
-"https://github.com/TheWover/donut.git"
-"https://github.com/optiv/Freeze.git"
 "https://github.com/tmux-plugins/tpm.git"
 "https://github.com/tmux-plugins/list.git"
 "https://github.com/yen5004/dns-exfil-infil.git"
