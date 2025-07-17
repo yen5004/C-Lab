@@ -385,18 +385,7 @@ echo "Installed Freeze at: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
 ##########################################
-##########################################
-# Install command logger
-
-sudo mkdir $HOME/log && sudo chmod 777 $HOME/log
-cd $git_folder/2025_cmd_logr
-sudo chmod +x Jul2025Ver.sh
-./Jul2025Ver.sh
-
-
-echo "Installed Jul2025Ver.sh install CLI logger from: $PWD - $(get_timestamp)" | tee -a $logg
-cd $git_folder
-
+################  ################  ################
 ################
 # Install More_dots bashrc/zshrc custom dot files
 cd $git_folder
@@ -414,6 +403,20 @@ sudo chmod 777 personal_cheatsheets.sh
 ./personal_cheatsheets.sh
 echo "Installed 'personal_cheatsheets.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
+
+##########################################
+# Install command logger
+
+sudo mkdir $HOME/log && sudo chmod 777 $HOME/log
+cd $git_folder/2025_cmd_logr
+sudo chmod +x Jul2025Ver.sh
+./Jul2025Ver.sh
+
+
+echo "Installed Jul2025Ver.sh install CLI logger from: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
+
 
 echo "Install completed - $(get_timestamp)" | tee -a $logg
 
