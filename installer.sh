@@ -384,62 +384,17 @@ go build Freeze.go
 echo "Installed Freeze at: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
-###############################
+##########################################
+##########################################
 # Install command logger
 
-cd $git_folder
-sudo mkdir $HOME/log && sudo chmod 777 $HOME/log && cd $HOME/log
-sudo touch cmd_logr_install.sh && sudo chmod 777 cmd_logr_install.sh
-cat << 'EOF' > cmd_logr_install.sh
-# Install logger script
-echo "###########_Custom Script Below_###########" | tee -a ~/.zshrc
-echo "# Script created by Franco M." | tee -a ~/.zshrc
-echo "###########_Custom Script Below_###########" | tee -a ~/.bashrc
-echo "# Script created by Franco M." | tee -a ~/.bashrc
+sudo mkdir $HOME/log && sudo chmod 777 $HOME/log
+cd $git_folder/2025_cmd_logr
+sudo chmod +x Jul2025Ver.sh
+./Jul2025Ver.sh
 
-# Prompt username
-echo "Please enter your username"
 
-#Read user input 
-read -r name
-
-# Store username in the .zshrc
-echo "export NAME=$name" >> ~/.zshrc
-
-# Display time in terminal
-# echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.zshrc
-echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.zshrc
-
-# Send logs to a file with time stamp
-echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.zshrc
-
-# Confirm user is stored and display IP info and more
-echo "echo TED-User: $NAME" >> ~/.zshrc
-echo "ifconfig" >> ~/.zshrc
-echo 'note="Use EXIT to close Log Script"' >> ~/.zshrc
-echo "NOTE: Use EXIT to close Log Script"
-echo 'echo $note' >> ~/.zshrc
-
-# Store username in the .bashrc
-echo "export NAME=$name" >> ~/.bashrc
-# echo 'RPROMPT="[%D{%m/%f/%Y}|%D{%L:%M}]"' >> ~/.bashrc
-echo 'RPROMPT="[%D{%d%b%Y}|%D{%L:%M}]"' >> ~/.bashrc  
-
-# Sent logs to a file with time stamp
-echo 'test "$(ps -ocommand= -p $PPID | awk '\''{print $1}'\'')" == '\''script'\'' || (script -a -f $HOME/log/$(date +"%F")_shell.log)' >> ~/.bashrc
-
-#Confirm user is stored and display IP info and more
-echo "TED-User: $NAME" >> ~/.bashrc
-echo 'note="use exit to  close script"' >> ~/.bashrc
-echo 'echo $note' >> ~/.bashrc
-echo "Command logger install complete"
-echo "cmd_logr_install.sh finished!"
-
-EOF
-
-echo "Copied 'cmd_logr_install.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
-./cmd_logr_install.sh
-echo "Installed 'cmd_logr_install.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
+echo "Installed Jul2025Ver.sh install CLI logger from: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
 ################
@@ -460,8 +415,10 @@ sudo chmod 777 personal_cheatsheets.sh
 echo "Installed 'personal_cheatsheets.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
+echo "Install completed - $(get_timestamp)" | tee -a $logg
+
 #https://freeipa-pentesting.popdocs.net/
 
-echo "Install completed - $(get_timestamp)" | tee -a $logg
+
 
 
