@@ -161,16 +161,16 @@ done
 # Special Git installs:
 
 # Special install for mardkdown_live_preview:
-if ! command -v markdown-live-preview >/dev/null 2>&1; then
-    echo "markdown-live-preview not found. Installing ..."
-    cd $git_folder
-    cd markdown-live-preview && sudo chmod 777 markdown-live-preview
-    make setup && make build
-    echo "Installed markdown_live_preview at: $PWD - $(get_timestamp)" | tee -a $logg
-else
-    echo "markdown-live-preview is already installed - $(get_timestamp)" | tee -a $logg
-    cd $git_folder
-fi
+#if ! command -v markdown-live-preview >/dev/null 2>&1; then
+#    echo "markdown-live-preview not found. Installing ..."
+#    cd $git_folder
+#    cd markdown-live-preview && sudo chmod 777 markdown-live-preview
+#    make setup && make build
+#    echo "Installed markdown_live_preview at: $PWD - $(get_timestamp)" | tee -a $logg
+#else
+#    echo "markdown-live-preview is already installed - $(get_timestamp)" | tee -a $logg
+#    cd $git_folder
+#fi
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -183,35 +183,23 @@ echo "PIP installed updog - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
 #Start python install of PXEThief
-cd $git_folder && sudo chmod 777 PXEThief
-cd PXEThief
-pip install -r requirements.txt
-echo "Installed PXEThief at: $PWD  - $(get_timestamp)" | tee -a $logg
-cd $git_folder
+#cd $git_folder && sudo chmod 777 PXEThief
+#cd PXEThief
+#pip install -r requirements.txt
+#echo "Installed PXEThief at: $PWD  - $(get_timestamp)" | tee -a $logg
+#cd $git_folder
 
 # Special install for grip:
 # grips is a Python-based cli utility that renders Markdown files exactly like GitHub does, even using GitHub's own CSS for pixel-perfect accuracy.
 cd $git_folder
 pipx install grip
-echo "PIP installed grip at: $PWD - $(get_timestamp)" | tee -a $logg
+echo "PIP installed grips at: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Golang installs:
 
-##########################################
-##########################################
-# Install command logger
-
-sudo mkdir $HOME/log && sudo chmod 777 $HOME/log
-cd $git_folder/2025_cmd_logr
-sudo chmod +x Jul2025Ver.sh
-./Jul2025Ver.sh
-
-
-echo "Installed Jul2025Ver.sh install CLI logger from: $PWD - $(get_timestamp)" | tee -a $logg
-cd $git_folder
 
 ################
 # Install More_dots bashrc/zshrc custom dot files
@@ -231,9 +219,18 @@ sudo chmod 777 personal_cheatsheets.sh
 echo "Installed 'personal_cheatsheets.sh' at: $PWD - $(get_timestamp)" | tee -a $logg
 cd $git_folder
 
+##########################################
+##########################################
+# Install command logger
+
+sudo mkdir $HOME/log && sudo chmod 777 $HOME/log
+cd $git_folder/2025_cmd_logr
+sudo chmod +x Jul2025Ver.sh
+./Jul2025Ver.sh
+
+echo "Installed Jul2025Ver.sh install CLI logger from: $PWD - $(get_timestamp)" | tee -a $logg
+cd $git_folder
+
 echo "Install completed - $(get_timestamp)" | tee -a $logg
 
 #https://freeipa-pentesting.popdocs.net/
-
-
-
