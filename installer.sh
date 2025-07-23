@@ -173,6 +173,8 @@ repo_urls=(
 "https://github.com/yen5004/EICAR_python.git"
 "https://github.com/yen5004/dnslib.git"
 "https://github.com/freeipa/freeipa.git"
+"https://github.com/krablize/icmpdoor.git"
+"https://github.com/yen5004/THM_dataexfil.git"
 )
 
 # Directory of where repos will be cloned:
